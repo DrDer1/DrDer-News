@@ -3,6 +3,12 @@
 
   var ARABIC_CHAR_PATTERN = /[\u0600-\u06FF]/;
 
+  var CORS_PROXY_PREFIX = 'https://api.allorigins.win/raw?url=';
+
+  function buildProxiedUrl(originalUrl) {
+    return CORS_PROXY_PREFIX + encodeURIComponent(originalUrl);
+  }
+
   function detectDirection(text) {
     if (text && ARABIC_CHAR_PATTERN.test(text)) {
       return 'rtl';
@@ -274,7 +280,9 @@
   }
 
   function fetchSingleSource(sourceConfig) {
-    return fetch(sourceConfig.url, { cache: 'no-store' })
+    var requestUrl = buildProxiedUrl(sourceConfig.url);
+
+    return fetch(requestUrl, { cache: 'no-store' })
       .then(function (response) {
         if (!response.ok) {
           throw new Error('HTTP ' + response.status + ' for ' + sourceConfig.name);
