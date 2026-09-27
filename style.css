@@ -29,7 +29,7 @@ html {
 body {
   background: var(--bg-page);
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -63,6 +63,7 @@ body {
   font-weight: 700;
   color: var(--accent-gold-light);
   letter-spacing: 0.3px;
+  direction: ltr;
 }
 
 .refresh-button {
@@ -98,6 +99,7 @@ body {
   border-top-color: transparent;
   border-radius: 50%;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 @keyframes spin {
@@ -220,7 +222,7 @@ body {
   color: var(--accent-gold);
 }
 
-/* RTL / LTR per-card direction */
+/* Per-article direction (independent of page direction) */
 
 .news-card[dir="rtl"] .news-card-meta,
 .news-card[dir="rtl"] .news-card-title,
