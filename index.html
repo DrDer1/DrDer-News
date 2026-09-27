@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DrDer News</title>
-<meta name="description" content="DrDer News - Live world news from trusted global sources">
+<meta name="description" content="DrDer News - أخبار العالم مباشرة من مصادر موثوقة">
 <meta name="theme-color" content="#0d0b08">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.json">
@@ -17,9 +17,9 @@
 <header class="app-header">
   <div class="app-header-inner">
     <h1 class="app-title">DrDer News</h1>
-    <button id="refreshButton" class="refresh-button" type="button" aria-label="Refresh news">
+    <button id="refreshButton" class="refresh-button" type="button" aria-label="تحديث الأخبار">
       <span class="refresh-icon" aria-hidden="true"></span>
-      <span class="refresh-label">Refresh</span>
+      <span class="refresh-label">تحديث</span>
     </button>
   </div>
   <div id="statusBar" class="status-bar" role="status" aria-live="polite"></div>
@@ -27,10 +27,10 @@
 
 <main id="newsContainer" class="news-container" aria-live="polite">
   <div id="emptyState" class="empty-state" hidden>
-    <p>No news available right now.</p>
+    <p>لا توجد أخبار متاحة حاليًا.</p>
   </div>
   <div id="loadingState" class="loading-state">
-    <p>Loading news...</p>
+    <p>جاري تحميل الأخبار...</p>
   </div>
   <div id="newsList" class="news-list"></div>
 </main>
@@ -49,7 +49,7 @@
       </div>
       <h2 class="news-card-title"></h2>
       <p class="news-card-summary"></p>
-      <a class="news-card-link" href="#" target="_blank" rel="noopener noreferrer">Read full article</a>
+      <a class="news-card-link" href="#" target="_blank" rel="noopener noreferrer">قراءة الخبر كاملاً</a>
     </div>
   </article>
 </template>
