@@ -117,7 +117,7 @@
     if (isNaN(date.getTime())) {
       return '';
     }
-    return date.toLocaleString(undefined, {
+    return date.toLocaleString('ar', {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
@@ -233,12 +233,18 @@
     }
 
     showLoadingState(true);
-    setStatus(isManual ? 'Refreshing...' : 'Updating news...', false);
+    setStatus(isManual ? 'جاري التحديث...' : 'جاري تحديث الأخبار...', false);
 
     var previousSeenIds = readSeenIds();
 
     window.NewsService.fetchAllNews(window.NEWS_SOURCES, previousSeenIds)
       .then(function (result) {
+        console.log(
+          'DrDer News: sources succeeded =', result.succeededSourceCount,
+          '/ failed =', result.failedSourceCount,
+          '/ new articles fetched =', result.articles.length
+        );
+
         currentArticles = mergeArticles(result.articles, currentArticles);
 
         writeStoredArticles(currentArticles);
@@ -251,26 +257,30 @@
         showLoadingState(false);
 
         if (result.succeededSourceCount === 0) {
-          setStatus('Unable to reach news sources. Showing cached news.', true);
+          setStatus('تعذر الوصول إلى مصادر الأخبار. راجع اتصالك بالإنترنت.', true);
+        } else if (currentArticles.length === 0) {
+          setStatus('تم الاتصال بالمصادر لكن لم تُعثر أخبار جديدة.', true);
         } else if (result.failedSourceCount > 0) {
-          setStatus('Updated - ' + result.failedSourceCount + ' source(s) unavailable', false);
+          setStatus('تم التحديث - ' + result.failedSourceCount + ' مصدر غير متاح حاليًا', false);
         } else {
-          setStatus('Updated just now', false);
+          setStatus('آخر تحديث: الآن', false);
         }
       })
       .catch(function (error) {
         console.error('DrDer News: refresh failed', error);
         showLoadingState(false);
         if (currentArticles.length === 0) {
-          setStatus('Unable to load news. Please check your connection.', true);
+          setStatus('تعذر تحميل الأخبار. تحقق من اتصالك بالإنترنت.', true);
         } else {
-          setStatus('Unable to update. Showing cached news.', true);
+          setStatus('تعذر التحديث. يتم عرض آخر أخبار محفوظة.', true);
         }
       })
       .finally(function () {
         isFetching = false;
         refreshButtonEl.classList.remove('is-refreshing');
         refreshButtonEl.disabled = false;
+        // Safety net: never leave the loading screen stuck no matter what happens above.
+        showLoadingState(false);
       });
   }
 
@@ -293,12 +303,12 @@
   }
 
   function handleOnline() {
-    setStatus('Back online - updating...', false);
+    setStatus('تم استعادة الاتصال - جاري التحديث...', false);
     refreshNews(false);
   }
 
   function handleOffline() {
-    setStatus('You are offline. Showing cached news.', true);
+    setStatus('أنت غير متصل بالإنترنت. يتم عرض آخر أخبار محفوظة.', true);
   }
 
   function initializeFromStorage() {
